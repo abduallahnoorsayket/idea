@@ -22,3 +22,15 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+# --- AI Tool Folders & Files ---
+.claude/
+.codex/
+.cursor/
+.junie/
+.mcp.json
+AGENTS.md
+CLAUDE.md
+boost.json
+
+# --- Tools & Configs ---
+
