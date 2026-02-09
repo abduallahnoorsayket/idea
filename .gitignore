@@ -31,6 +31,7 @@ Thumbs.db
 AGENTS.md
 CLAUDE.md
 boost.json
-
+/tests/Browser/Screenshots/*
+# tests/Browser/Screenshots
 # --- Tools & Configs ---
 
