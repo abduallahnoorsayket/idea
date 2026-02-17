@@ -11,25 +11,25 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('steps', function (Blueprint $table) {
+            $table->id();
+            $table->foreignIdFor(Idea::class)->constrained()->cascadeOnDelete();
+            $table->string('description');
+            $table->boolean('completed')->default(false);
+            $table->timestamps();
+        });
+    }
 
-  /**
-   * Run the migrations.
-   */
-  public function up(): void {
-    Schema::create('steps', function (Blueprint $table) {
-        $table->id();
-        $table->foreignIdFor(Idea::class)->constrained()->cascadeOnDelete();
-        $table->string('description');
-        $table->boolean('completed')->default(FALSE);
-        $table->timestamps();
-    });
-  }
-
-  /**
-   * Reverse the migrations.
-   */
-  public function down(): void {
-    Schema::dropIfExists('steps');
-  }
-
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('steps');
+    }
 };

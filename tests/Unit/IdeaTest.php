@@ -20,7 +20,7 @@ test('it can have steps', function () {
     expect($idea->steps)->toBeInstanceOf(Collection::class);
 
     $idea->steps()->create([
-      'description' => 'Do the thing',
+        'description' => 'Do the thing',
     ]);
 
     expect($idea->fresh()->steps)->toHaveCount(1);
