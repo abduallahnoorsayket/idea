@@ -106,7 +106,7 @@
                                     class="input flex-1" data-test="new-step" />
 
                                 <button type="button" @click="steps.push(newStep.trim()); newStep = '';"
-                                    :disabled="newStep.trim().length === 0" data-test="submit-new-link-button">
+                                    :disabled="newStep.trim().length === 0" data-test="submit-new-step-button">
                                     <x-icons.close class="rotate-45" />
                                 </button>
                             </div>

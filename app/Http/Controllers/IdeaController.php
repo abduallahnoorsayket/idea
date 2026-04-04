@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Actions\CreateIdea;
 use App\Http\Requests\StoreIdeaRequest;
 use App\Http\Requests\UpdateIdeaRequest;
 use App\IdeaStatus;
 use App\Models\Idea;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
 class IdeaController extends Controller
@@ -17,7 +20,7 @@ class IdeaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request): View
     {
 
         $user = Auth::user();
@@ -47,18 +50,10 @@ class IdeaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreIdeaRequest $request)
+    public function store(StoreIdeaRequest $request): RedirectResponse
     {
 
-        $idea = Auth::user()->ideas()->create($request->safe()->except(['steps', 'image']));
-
-        $idea->steps()->createMany(
-            collect($request->steps)->map(fn ($step) => ['description' => $step])
-        );
-        $imagePath = $request->image->store('ideas', 'public');
-        $idea->update([
-            'image_path' => $imagePath,
-        ]);
+        (new CreateIdea)->handle($request->safe()->all());
 
         return to_route('idea.index')->with('success', 'Idea created!');
     }
@@ -66,8 +61,10 @@ class IdeaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Idea $idea): view
+    public function show(Idea $idea): View
     {
+        Gate::authorize('workWith', $idea);
+
         return view('idea.show', [
             'idea' => $idea,
 
@@ -77,18 +74,25 @@ class IdeaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Idea $idea): void {}
+    public function edit(Idea $idea): void
+    {
+        Gate::authorize('workWith', $idea);
+    }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateIdeaRequest $request, Idea $idea): void {}
+    public function update(UpdateIdeaRequest $request, Idea $idea): void
+    {
+        Gate::authorize('workWith', $idea);
+    }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Idea $idea)
+    public function destroy(Idea $idea): RedirectResponse
     {
+        Gate::authorize('workWith', $idea);
         $idea->delete();
 
         return redirect('/ideas');

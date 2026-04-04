@@ -51,9 +51,9 @@
 
                                     <div class="flex items-center gap-x-3">
                                         <button
-                                            class="size-5 flex items-center justify-center rounded-lg text-primary-foreground border {{ $step->completed ? 'bg-primary' : 'border border-primary' }}
-                                            type="submit"
-                                            role="checkbox">
+                                            class="size-5 flex items-center justify-center rounded-lg text-primary-foreground border {{ $step->completed ? 'bg-primary' : 'border-primary' }}"
+                                            type="submit" role="checkbox"
+                                            aria-checked="{{ $step->completed ? 'true' : 'false' }}">
                                             &check;
                                         </button>
                                         <span

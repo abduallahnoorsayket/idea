@@ -17,7 +17,7 @@ Route::post('/ideas', [IdeaController::class, 'store'])->name('idea.store')->mid
 Route::get('/ideas/{idea}', [IdeaController::class, 'show'])->name('idea.show')->middleware('auth');
 Route::delete('/ideas/{idea}', [IdeaController::class, 'destroy'])->name('idea.destroy')->middleware('auth');
 
-Route::patch('/steps/{step}', [StepController::class, 'update'])->name('step.updata')->middleware('auth');
+Route::patch('/steps/{step}', [StepController::class, 'update'])->name('step.update')->middleware('auth');
 Route::get('/register', [RegisteredUserController::class, 'create'])->middleware('guest');
 Route::post('/register', [RegisteredUserController::class, 'store'])->middleware('guest');
 Route::get('/login', [SessionController::class, 'create'])->name('login')->middleware('guest');
